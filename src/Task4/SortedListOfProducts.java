@@ -3,37 +3,41 @@ package Task4;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashSet;
+import java.util.*;
 
 
 public class SortedListOfProducts {
 
     public static void main(String[] args) {
-        HashSet<Product> list = new HashSet<>();
+        Map<String, Product> list = new TreeMap<>();
 
         try {
-            File file = new File("C:\\Users\\Сережа\\IdeaProjects\\JavaPractice\\src\\Task4\\ProductList.txt");
+            File file = new File("data/ProductList.txt");
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
             String line;
-            while ((line = br.readLine()) != null ){
+            while ((line = br.readLine()) != null) {
                 String[] arrLine = line.split(" - ");
-                if(arrLine.length != 3){
-                    System.out.println("Error");
+                if (arrLine.length != 3) {
+                    throw new Exception("Error while reading the file. Check the file structure.");
                 }
 
                 Product product = new Product(arrLine[0],
                         Integer.parseInt(arrLine[1]),
                         Double.parseDouble(arrLine[2]));
-                        list.add(product);
+                if (list.containsKey(arrLine[0])) {
+                    list.get(arrLine[0]).add(Integer.parseInt(arrLine[1]));
+                } else {
+                    list.put(arrLine[0], product);
+                }
             }
 
-        }catch (IOException ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        list.stream().sorted().forEach(System.out::println);
+        List<Product> sortedList = new ArrayList<Product>(list.values());
+        sortedList.stream().sorted().forEach(System.out::println);
     }
 }

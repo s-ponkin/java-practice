@@ -1,7 +1,5 @@
 package Task4;
 
-import java.util.Objects;
-
 public class Product implements Comparable {
 
     private String name;
@@ -12,6 +10,10 @@ public class Product implements Comparable {
         this.name = name;
         this.amount = amount;
         this.cost = cost;
+    }
+
+    public void add(int cost) {
+        this.cost += cost;
     }
 
     public String getName() {
@@ -39,28 +41,13 @@ public class Product implements Comparable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        product.setCost(product.getCost() + this.cost);
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
-
-    @Override
     public String toString() {
-        return name + " - " + cost + " шт. - " + amount + " р." ;
+        return name + " - " + cost + " шт. - " + amount + " р.";
     }
 
     @Override
     public int compareTo(Object o) {
         Product product = (Product) o;
- //       int res = Double.compare(this.amount, product.getAmount());
         int res = Integer.compare(this.cost, product.getCost());
         return res;
     }
