@@ -36,6 +36,7 @@ public class SortedListOfProducts {
 
         } catch (IOException | FileStructuresException ex) {
             logger.log(Level.SEVERE, ex.getMessage());
+            System.out.println(ex.getMessage());
         }
 
         List<Product> sortedList = new ArrayList<>(list.values());
