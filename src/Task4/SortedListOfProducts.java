@@ -1,26 +1,27 @@
 package Task4;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class SortedListOfProducts {
 
+    private static final Logger logger = Logger.getLogger(SortedListOfProducts.class.getName());
+
     public static void main(String[] args) {
         Map<String, Product> list = new TreeMap<>();
 
-        try {
-            File file = new File("data/ProductList.txt");
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
+        try (BufferedReader br = new BufferedReader(new FileReader("data/ProductList.txt"))) {
 
             String line;
             while ((line = br.readLine()) != null) {
                 String[] arrLine = line.split(" - ");
                 if (arrLine.length != 3) {
-                    throw new Exception("Error while reading the file. Check the file structure.");
+                    throw new FileStructuresException("Error while reading the file. Check the file structure.");
                 }
 
                 Product product = new Product(arrLine[0],
@@ -33,11 +34,11 @@ public class SortedListOfProducts {
                 }
             }
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IOException | FileStructuresException ex) {
+            logger.log(Level.SEVERE, ex.getMessage());
         }
 
-        List<Product> sortedList = new ArrayList<Product>(list.values());
+        List<Product> sortedList = new ArrayList<>(list.values());
         sortedList.stream().sorted().forEach(System.out::println);
     }
 }

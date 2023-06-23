@@ -54,22 +54,12 @@ public class AddingArrays {
 
             if (indexOne < 0) {
                 newNum = numTwo[indexTwo] + transfer;
-                if (newNum > 9) {
-                    result[i] = newNum % 10;
-                    transfer = newNum / 10;
-                } else {
-                    result[i] = numTwo[indexTwo] + transfer;
-                    transfer = 0;
-                }
+                result[i] = newNum % 10;
+                transfer = newNum / 10;
             } else if (indexTwo < 0) {
                 newNum = numOne[indexOne] + transfer;
-                if (newNum > 9) {
-                    result[i] = newNum % 10;
-                    transfer = newNum / 10;
-                } else {
-                    result[i] = numOne[indexOne] + transfer;
-                    transfer = 0;
-                }
+                result[i] = newNum % 10;
+                transfer = newNum / 10;
             } else {
                 newNum = numOne[indexOne] + numTwo[indexTwo] + transfer;
                 result[i] = newNum % 10;
